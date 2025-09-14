@@ -7,7 +7,7 @@ router.use(authMiddleware);
 
 router.get("/:id", asyncHandler(getCustomerById));
 router.get("/", asyncHandler(getAllCustomers));
-router.post("/", asyncHandler(createCustomer));
+router.post("/", createCustomer);
 
 module.exports = {
   customerRouter: router,

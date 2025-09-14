@@ -11,7 +11,7 @@ const { Customer } = require("../models/schema/customer-schema");
  */
 exports.getAllCustomers = async (...[req]) => {
   try {
-    const { user:userId } = req;
+    const { user: userId } = req;
     if (!userId) {
       throw new AppError("Unauthorized", 401);
     }
@@ -29,17 +29,19 @@ exports.getAllCustomers = async (...[req]) => {
  * @access Private
  * @returns
  */
-exports.createCustomer = async (...[req]) => {
+exports.createCustomer = async (req, res, next) => {
   try {
     const { user: userId } = req;
+    console.log("Creating customer for userId:", userId);
     if (!userId) {
       throw new AppError("Unauthorized", 401);
     }
     const { name, email, phone_number, birth_date } = req.body;
 
-    return Customer.create({ name, email, phone_number, birth_date, userId });
+    const response = await Customer.create({ name, email, phone_number, birth_date, userId });
+    res.status(201).json({ data: response, ok: true });
   } catch (err) {
-    throw err;
+    res.status(500).json({ error: err.message, ok: false });
   }
 };
 
@@ -55,7 +57,7 @@ exports.createCustomer = async (...[req]) => {
 exports.getCustomerById = async (...[req]) => {
   try {
     const { user: userId } = req;
-  
+
     const { id } = req.params;
     if (!userId) {
       console.log("No userId found in request", userId);
