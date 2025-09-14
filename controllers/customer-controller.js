@@ -49,7 +49,7 @@ exports.createCustomer = async (req, res, next) => {
  *
  * @param  {req,res, next}  req.userId has to be set by auth middleware
  * @param req.params.id Customer ID to fetch
- * @description Get a customer by ID for the authenticated user
+ * @description Get a customer by ID for the authenticated userx
  * @route GET /api/customers/:id
  * @access Private
  * @returns
